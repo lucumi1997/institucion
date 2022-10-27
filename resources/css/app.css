@@ -1,0 +1,181 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/*@import  "tabulator-tables";*/
+
+*{
+    font-family: 'Outfit', sans-serif;
+
+}
+
+#DataTables_Table_0_paginate {
+    float: right !important;
+    text-align: right !important;
+    padding: 0.25em !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    color: #333 !important;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    background-color: rgba(230, 230, 230, 0.1);
+    background: linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
+}
+
+#DataTables_Table_0_filter input {
+    border-radius: 15px;
+
+}
+
+#DataTables_Table_0_filter {
+    padding: 1em;
+}
+
+#DataTables_Table_0_filter label::before {
+    content: 'Buscar';
+
+}
+
+#DataTables_Table_0_filter label::after {
+    content: 'Buscar';
+    display: none;
+}
+
+#DataTables_Table_0_filter label {
+    visibility: hidden;
+}
+
+#DataTables_Table_0_filter label::before {
+    content: 'Buscar';
+    visibility: visible;
+    margin-right: -3em;
+}
+
+#DataTables_Table_0_filter input {
+    visibility: visible;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    box-sizing: border-box;
+    display: inline-block;
+    min-width: 1.5em;
+    padding: 0.5em 1em;
+    margin-left: 2px;
+    text-align: center;
+    text-decoration: none !important;
+    cursor: pointer;
+    color: #333 !important;
+    border: 1px solid transparent;
+    border-radius: 2px;
+}
+
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_processing,
+.dataTables_wrapper .dataTables_paginate {
+    color: #333;
+}
+
+.dataTables_wrapper .dataTables_info {
+    clear: both;
+    float: left;
+    padding-top: 0.755em;
+}
+
+
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_processing,
+.dataTables_wrapper .dataTables_paginate {
+    color: #333;
+}
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_processing,
+.dataTables_wrapper .dataTables_paginate {
+    color: #333;
+}
+
+.dataTables_wrapper .dataTables_filter {
+    float: right;
+    text-align: right;
+}
+
+table tr td {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom-width: 1px;
+
+}
+
+table tr td {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.tabulator-header-contents {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.tabulator-row {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+}
+
+.tabulator .tabulator-header .tabulator-col {
+    background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+
+}
+.dataTables_wrapper .dataTables_length select{
+    padding-right: 2.5rem;
+}
+.tabulator {
+    border-style: solid;
+    border-color: #e5e7eb;
+}
+
+.tabulator .tabulator-header {
+    border-style: solid;
+    border-color: #e5e7eb;
+}
+
+.tabulator-header-contents {
+    background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
+.tabulator-row.tabulator-row-even {
+    background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
+.tabulator .tabulator-footer {
+    background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+
+}
+
+.tabulator-page-size {
+    width: 70px;
+}
+
+
+table tbody {
+    --tw-bg-opacity: 1;
+    background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+
+}
+
+table tbody tr {
+    margin: 3em;
+}
+.submenuheadless{
+    position: fixed;
+    z-index: 50;
+    width: 20%;
+}

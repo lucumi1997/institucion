@@ -1,0 +1,105 @@
+/*tabulator.value = new Tabulator("#example-table", {
+                    data: misestu.value,
+                    ajaxFiltering: true,
+                    ajaxSorting: true,
+                    printAsHtml: true,
+                    printStyled: true,
+                    pagination: "local",
+                    paginationSize: 10,
+                    paginationSizeSelector: [10, 20, 30, 40],
+                    layout: "fitColumns",
+                    responsiveLayout: "collapse",
+                    placeholder: "No matching records found",
+                    columns: [
+                        {
+                            formatter: "responsiveCollapse",
+                            width: 40,
+                            minWidth: 30,
+                            hozAlign: "center",
+                            resizable: false,
+                            headerSort: false,
+                        },
+                        {
+                            title: "Nombres",
+                            editorParams: {
+                                search: true,
+                                mask: "AAA-999",
+                                selectContents: true,
+                                elementAttributes: {
+                                    maxlength: "10", //set the maximum character length of the input element to 10 characters
+                                }
+                            },
+                            headerFilter: "input",
+                            minWidth: 200,
+                            responsive: 0,
+                            field: "name",
+                            field: "lastname",
+                            vertAlign: "middle",
+                            print: false,
+                            download: false,
+                            formatter(cell) {
+                                return `<div>
+                <div class="font-medium whitespace-nowrap"></div>
+                <div class="text-slate-800 text-md whitespace-nowrap">${cell.getData().name
+                                    }</div>
+              </div>`;
+                            },
+                        },
+                        {
+                            title: "Apellidos",
+                            minWidth: 200,
+                            responsive: 0,
+                            field: "lastname",
+                            vertAlign: "middle",
+                            print: false,
+                            download: false,
+                            formatter(cell) {
+                                return `<div>
+                <div class="font-medium whitespace-nowrap"></div>
+                <div class="text-slate-800 text-md whitespace-nowrap">${cell.getData().lastname
+                                    }</div>
+              </div>`;
+                            },
+                        },
+                        {
+                            title: "Edad",
+                            minWidth: 200,
+                            responsive: 0,
+                            field: "age",
+                            vertAlign: "middle",
+                            print: false,
+                            download: false,
+                            formatter(cell) {
+                                return `<div>
+                <div class="font-medium whitespace-nowrap"></div>
+                <div class="text-slate-800 text-md whitespace-nowrap">${cell.getData().age
+                                    }</div>
+              </div>`;
+                            },
+                        },
+                        {
+                            title: "Género",
+                            minWidth: 200,
+                            responsive: 0,
+                            field: "gender",
+                            vertAlign: "middle",
+                            print: false,
+                            download: false,
+                            formatter(cell) {
+                                return `<div>
+                <div class="font-medium whitespace-nowrap"></div>
+                <div class="text-slate-800 text-md whitespace-nowrap">${cell.getData().gender
+                                    }</div>
+              </div>`;
+                            },
+                        },
+
+                    ],
+                    renderComplete() {
+                        createIcons({
+                            icons,
+                            "stroke-width": 1.5,
+                            nameAttr: "data-lucide",
+                        });
+                    },
+                });*/

@@ -41,3 +41,6 @@ Route::get('/estudiantesapi', [App\Http\Controllers\EstudianteController::class,
 Route::resource('profesores', App\Http\Controllers\ProfesorController::class);
 Route::get('/profesoresapi', [App\Http\Controllers\ProfesorController::class, 'profesoresapi']);
 
+Route::get('/example', [App\Http\Controllers\EstudianteController::class, 'example']);
+
+

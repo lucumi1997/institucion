@@ -23,7 +23,13 @@ class EstudianteController extends Controller
         $estudiante = Estudiante::all();
         return Inertia::render('personas/Estudiantes', compact('estudiante'));
     }
-
+    public function example()
+    {
+        //
+        $example = Estudiante::all();
+        return Inertia::render('personas/Example', compact('example'));
+    }
+    
     /**
      * Show the form for creating a new resource.
      *

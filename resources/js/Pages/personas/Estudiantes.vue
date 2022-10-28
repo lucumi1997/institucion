@@ -4,11 +4,16 @@ import Welcome from '@/Components/Welcome.vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
+import { ref } from 'vue'
+import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
+
 
 </script>
 
 <style>
 /*@import 'datatables.net-dt';*/
+@import 'datatables.net-dt';
 </style>
 <script>
 
@@ -16,7 +21,6 @@ import { onMounted, ref } from 'vue';
 import DataTable from 'datatables.net-vue3';
 import Select from 'datatables.net-select';
 import DataTableBs5 from 'datatables.net-bs5';
-import { TabulatorFull as Tabulator } from 'tabulator-tables';
 import router from '../../router/index'
 
 /**SELECT ***/
@@ -28,6 +32,7 @@ import {
     ListboxOption,
 } from '@headlessui/vue'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
+import Tabla from '../Tablas/Tabla.vue';
 const genero = [
     { name: 'Masculino' },
     { name: 'Femenino' },
@@ -40,14 +45,17 @@ const selectedGender = ref(genero[0])
 const table = ref();
 const misestu = ref();
 const data = ref([]);
-const tableData = ref();
 const estado = ref();
 const errors = ref();
 const jsonerrors = ref();
 const mostrarerrores = ref(0);
-
+const open = ref(false);
 DataTable.use(Select);
 const columns = [
+    {
+        data: 'id',
+        title: 'Id',
+    },
     {
         data: 'name',
         title: 'Nombre',
@@ -67,54 +75,49 @@ const columns = [
     {
         data: 'acciones',
         title: 'Acciones',
+        campo: 'editar',
     },
 ];
 export default {
-    props: ['estudiante'],
+    props: ["estudiante"],
     data() {
         return {
-            name: '',
-            lastname: '',
-            age: '',
-            gender: '',
-            tabulator: null,
-
-        }
+            name: "",
+            lastname: "",
+            age: "",
+            gender: "",
+            select: false
+        };
     },
-    computed: {
-
-    },
-    watch: {
-
-    },
+    computed: {},
+    watch: {},
     mounted() {
-        this.listEstudiantes()
     },
     created() {
     },
     updated() {
-
     },
     methods: {
         submit(e) {
             const config = {
                 headers: {
-                    'content-type': 'multipart/form-data'
+                    "content-type": "multipart/form-data"
                 }
-            }
+            };
             let midata = new FormData();
-            midata.append('name', this.name);
-            midata.append('lastname', this.lastname);
-            midata.append('age', this.age);
-            midata.append('gender', selectedGender.value.name);
-            const res = axios.post('/estudiantes', midata, config).then(function (response) {
+            midata.append("name", this.name);
+            midata.append("lastname", this.lastname);
+            midata.append("age", this.age);
+            midata.append("gender", selectedGender.value.name);
+            const res = axios.post("/estudiantes", midata, config).then(function (response) {
                 if (response.data.ejecuccion == true) {
                     // console.log(response.data);
                     estado.value = response.data.ejecuccion;
-                    Swal.fire('¡Guardado correctamente!', '', 'success');
-                    resetForm()
-                } else {
-                    Swal.fire('¡Lo sentimos, no se pudo guardar!', '', 'error')
+                    Swal.fire("¡Guardado correctamente!", "", "success");
+                    resetForm();
+                }
+                else {
+                    Swal.fire("¡Lo sentimos, no se pudo guardar!", "", "error");
                 }
                 if (estado.value == true) {
                     data.value.push({
@@ -122,70 +125,60 @@ export default {
                         lastname: response.data[0].lastname,
                         age: response.data[0].age,
                         gender: response.data[0].gender,
-                        acciones: '\<button>\<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">\
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />\
-                        </svg></button>'
-                           
+                        acciones: columns[5].campo
                     });
-                } else {
-                    Swal.fire('¡Lo sentimos, no se pudo guardar!', '', 'error')
                 }
-
+                else {
+                    Swal.fire("¡Lo sentimos, no se pudo guardar!", "", "error");
+                }
             }).catch(function (err) {
-                console.log(err)
+                console.log(err);
                 if (err.response) {
                     mostrarerrores.value = 1;
                     if (err.response.data.errors.name) {
                         errors.value = jsonerrors.value = ({
                             name: err.response.data.errors.name[0],
-                        })
+                        });
                     }
                     else if (err.response.data.errors.lastname) {
                         errors.value = jsonerrors.value = ({
                             lastname: err.response.data.errors.lastname[0],
-                        })
+                        });
                     }
                     else if (err.response.data.errors.age) {
                         errors.value = jsonerrors.value = ({
                             age: err.response.data.errors.age[0],
-                        })
+                        });
                     }
                     else /*(err.response.data.errors.gender)*/ {
                         errors.value = jsonerrors.value = ({
                             gender: err.response.data.errors.gender[0],
-                        })
+                        });
                     }
                 }
             });
             let resetForm = () => {
-                this.name = '';
-                this.lastname = '';
-                this.age = '';
-            }
+                this.name = "";
+                this.lastname = "";
+                this.age = "";
+            };
         },
-        listEstudiantes() {
 
-            axios.get('/estudiantesapi').then(function (response) {
-                misestu.value = response.data[0];
-                tableData.value = response.data[0];
-
-                for (let i = 0; i < tableData.value.length; i++) {
-                    data.value.push({
-                        name: response.data[0][i].name,
-                        lastname: response.data[0][i].lastname,
-                        age: response.data[0][i].age,
-                        gender: response.data[0][i].gender,
-                        acciones: '\<button>\<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">\
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />\
-                        </svg></button>'
-                    });
-                }
+        update() {
+            dt.rows({ selected: true }).every(function () {
+                let idx = table.value.dt().context;
+                console.log(idx);
             });
         },
-        editEstudiante(){
-            alert('Hola')
-        }
-    }
+        remove() {
+            dt.rows({ selected: true }).every(function () {
+                let idx = data.value.indexOf(this.data());
+                data.value.splice(idx, 1);
+            });
+            console.log(dt);
+        },
+    },
+    components: { Tabla }
 }
 
 </script>
@@ -313,68 +306,76 @@ export default {
                     </form>
                 </div>
             </div>
-            <!--<div class="mx-auto m-10 max-w-7xl">
-                <DataTable :data="data">
-                    <thead class="">
-                        <tr>
-                            <th class="py-3 px-6">Nombre</th>
-                            <th class="py-3 px-6">Apellido</th>
-                            <th class="py-3 px-6">Edad</th>
-                            <th class="py-3 px-6">Género</th>
-                        </tr>
-                    </thead>
-                </DataTable>
 
-            </div>-->
 
             <div class="mx-auto m-10 max-w-7xl">
                 <div class="overflow-x-auto relative shadow-md sm:rounded-lg p-4">
                     <DataTable ref="table" :data="data" :columns="columns" :options="{ select: true }" id="example"
                         class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" class="py-3 px-6">
-                                    Nombre
-                                </th>
-                                <th scope="col" class="py-3 px-6">
-                                    Apellidos
-                                </th>
-                                <th scope="col" class="py-3 px-6">
-                                    Edad
-                                </th>
-                                <th scope="col" class="py-3 px-6">
-                                    Género
-                                </th>
-                                <th scope="col" class="py-3 px-6">
-                                    Acciones
-                                </th>
-                            </tr>
-                        </thead>
-                        <!--<tbody>
-                            <tr v-for="estu in tableData"
-                                class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                                <td scope="row"
-                                    class="py-4 px-6 py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ estu.name }}
-                                </td>
-                                <td class="py-4 px-6">
-                                    {{ estu.lastname }}
-                                </td>
-                                <td class="py-4 px-6">
-                                    {{ estu.age }}
-                                </td>
-                                <td class="py-4 px-6">
-                                    {{ estu.gender }}
-                                </td>
-                            </tr>
-                        </tbody>-->
                     </DataTable>
                 </div>
 
             </div>
-            <div id="example-table" ref="table"
-                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"></div>
+    
+            <div class="mx-auto m-10 max-w-7xl">
+                <div class="overflow-x-auto relative shadow-md sm:rounded-lg p-4">
+                    <Tabla/>
+                </div>
 
+            </div>
+        </div>
+        <div>
+            <TransitionRoot as="template" :show="open">
+                <Dialog as="div" class="relative z-10" @close="open = false">
+                    <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0"
+                        enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100"
+                        leave-to="opacity-0">
+                        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                    </TransitionChild>
+
+                    <div class="fixed inset-0 z-10 overflow-y-auto">
+                        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                            <TransitionChild as="template" enter="ease-out duration-300"
+                                enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
+                                leave-from="opacity-100 translate-y-0 sm:scale-100"
+                                leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                                <DialogPanel
+                                    class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                        <div class="sm:flex sm:items-start">
+                                            <div
+                                                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                                <ExclamationTriangleIcon class="h-6 w-6 text-red-600"
+                                                    aria-hidden="true" />
+                                            </div>
+                                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                                <DialogTitle as="h3"
+                                                    class="text-lg font-medium leading-6 text-gray-900">Deactivate
+                                                    account</DialogTitle>
+                                                <div class="mt-2">
+                                                    <p class="text-sm text-gray-500">Are you sure you want to deactivate
+                                                        your account? All of your data will be permanently removed. This
+                                                        action cannot be undone.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                        <button type="button"
+                                            class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                                            @click="open = false">Deactivate</button>
+                                        <button type="button"
+                                            class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                            @click="open = false" ref="cancelButtonRef">Cancel</button>
+                                    </div>
+                                </DialogPanel>
+                            </TransitionChild>
+                        </div>
+                    </div>
+                </Dialog>
+            </TransitionRoot>
         </div>
     </AppLayout>
+
 </template>

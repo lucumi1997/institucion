@@ -46,6 +46,13 @@ class EstudianteController extends Controller
             $estudiantes
         ], Response::HTTP_OK);
     }
+    public function editarestudiante($id)
+    {
+        $estudiante_id = Estudiante::find($id);
+        return response()->json([
+            $estudiante_id
+        ], Response::HTTP_OK);
+    }
     
     /**
      * Store a newly created resource in storage.
@@ -109,9 +116,12 @@ class EstudianteController extends Controller
      * @param  \App\Models\Estudiante  $estudiante
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateEstudianteRequest $request, Estudiante $estudiante)
+    public function update(Request $request)
     {
-        //
+        //dd($request->id);
+        $estudiante = Estudiante::find($request->id);
+        $estudiante->update($request->all());
+        return response()->json(['success' => 'Actualizado correctamente.', 'ejecucion' => true]);
     }
 
     /**
@@ -120,8 +130,11 @@ class EstudianteController extends Controller
      * @param  \App\Models\Estudiante  $estudiante
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Estudiante $estudiante)
+    public function destroy(Estudiante $estudiante, Request $request)
     {
         //
+        $estudiantes = Estudiante::find($request->id);
+        $estudiantes->delete();
+        return response()->json(['success' => 'Eliminado correctamente.', 'ejecucion' => true]);
     }
 }

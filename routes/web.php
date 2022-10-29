@@ -43,4 +43,7 @@ Route::get('/profesoresapi', [App\Http\Controllers\ProfesorController::class, 'p
 
 Route::get('/example', [App\Http\Controllers\EstudianteController::class, 'example']);
 
+Route::get('editarestudiante/{id}', [App\Http\Controllers\EstudianteController::class, 'editarestudiante']);
+Route::post('/actualizarestudiante', [App\Http\Controllers\EstudianteController::class, 'update']);
+Route::post('/eliminarestudiante', [App\Http\Controllers\EstudianteController::class, 'destroy']);
 

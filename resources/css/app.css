@@ -179,3 +179,7 @@ table tbody tr {
     z-index: 50;
     width: 20%;
 }
+.tabulator-row:hover{
+    transition: 1s all;
+    background: #e8fafd !important;
+}
